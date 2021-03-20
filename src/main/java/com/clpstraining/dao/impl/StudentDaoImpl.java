@@ -1,17 +1,18 @@
 package com.clpstraining.dao.impl;
 
-import com.clpstraining.dao.StudentDao;
-import com.clpstraining.entity.Student;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import com.clpstraining.dao.StudentDao;
+import com.clpstraining.entity.Student;
 
 @Repository
 public class StudentDaoImpl implements StudentDao {
@@ -21,12 +22,10 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public Integer saveStudent(Student student) {
-//        String sqlString = "insert into trainingstudent(name,grade,major,comment) values (?,?,?,?)";
-
         StringBuilder sql = new StringBuilder("insert into trainingstudent(name,grade,major,comment) ");
         sql.append("values ");
         sql.append("(?,?,?,?)");
-    //
+
         return jdbcTemplate.update(sql.toString(),new Object[]{student.getName(), student.getGrade(), student.getMajor(),student.getComment()});
     }
 
@@ -41,7 +40,7 @@ public class StudentDaoImpl implements StudentDao {
         StringBuilder sql = new StringBuilder("update trainingstudent set name=? ");
         sql.append(" where id=?");
 
-        List params = new ArrayList();
+        List<Object> params = new ArrayList();
         params.add(student.getId());
 
         if( student.getGrade() > 0) {
