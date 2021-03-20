@@ -40,7 +40,7 @@ public class StudentDaoImpl implements StudentDao {
         StringBuilder sql = new StringBuilder("update trainingstudent set name=? ");
         sql.append(" where id=?");
 
-        List<Object> params = new ArrayList();
+        List<Object> params = new ArrayList<>();
         params.add(student.getId());
 
         if( student.getGrade() > 0) {
@@ -66,9 +66,6 @@ public class StudentDaoImpl implements StudentDao {
     public List<Student> listStudents() {
         String sql = new String("select id,name,grade,major,comment from trainingstudent");
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Student.class));
-
-//        jdbcTemplate.queryForObject();
-//        return jdbcTemplate.queryForList(sql, Student.class);
     }
 
     @Override
